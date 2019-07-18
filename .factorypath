@@ -1,0 +1,4 @@
+<factorypath>
+    <factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="C:\Users\Win7\Documents\Downloads\jar_files.zip" enabled="true" runInBatchMode="false"/>
+</factorypath>
