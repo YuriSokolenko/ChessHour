@@ -9,6 +9,7 @@ import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
 import com.chess.engine.board.Move.MajorMove;
+import com.chess.engine.pieces.Piece.PieceType;
 import com.google.common.collect.ImmutableList;
 
 public class Pawn extends Piece {
@@ -16,7 +17,7 @@ public class Pawn extends Piece {
 	private final static int[] CANDIDATE_MOVE_COORDINATE = { 8, 16, 7, 9 };
 
 	public Pawn(final Alliance pieceAlliance, final int piecePosition) {
-		super(pieceAlliance, piecePosition);
+		super(PieceType.PAWN, pieceAlliance, piecePosition);
 	}
 
 	@Override
@@ -81,6 +82,11 @@ public class Pawn extends Piece {
 		}
 
 		return ImmutableList.copyOf(legalMoves);
+	}
+	
+	@Override
+	public String toString() {
+		return Piece.PieceType.PAWN.toString();
 	}
 
 }

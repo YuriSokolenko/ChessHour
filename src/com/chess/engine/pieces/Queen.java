@@ -10,6 +10,7 @@ import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
 import com.chess.engine.board.Move.AttackMove;
 import com.chess.engine.board.Move.MajorMove;
+import com.chess.engine.pieces.Piece.PieceType;
 import com.google.common.collect.ImmutableList;
 
 public class Queen extends Piece {
@@ -17,7 +18,7 @@ public class Queen extends Piece {
 	private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATE = { -9, -8, -7, -1, 1, 7, 8, 9 };
 
 	public Queen(final Alliance pieceAlliance, final int piecePosition) {
-		super(pieceAlliance, piecePosition);
+		super(PieceType.QUEEN, pieceAlliance, piecePosition);
 	}
 
 	@Override
@@ -29,13 +30,13 @@ public class Queen extends Piece {
 			int candidateDestinationCoordinate = this.piecePosition;
 
 			while (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
-				candidateDestinationCoordinate += candidateCoordinateOffset;
 
 				// checks if the Queen is on first o eighth column. If yes - break;
 				if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset)
 						|| (isEighthColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset))) {
 					break;
 				}
+				candidateDestinationCoordinate += candidateCoordinateOffset;
 
 				if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
@@ -58,6 +59,11 @@ public class Queen extends Piece {
 		}
 
 		return ImmutableList.copyOf(legalMoves);
+	}
+	
+	@Override
+	public String toString() {
+		return Piece.PieceType.QUEEN.toString();
 	}
 
 	// if the Queen is in first column.

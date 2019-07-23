@@ -17,7 +17,7 @@ public class King extends Piece {
 	
 	
 	public King(final Alliance pieceAlliance, final int piecePosition) {
-		super(pieceAlliance, piecePosition);
+		super(PieceType.KING, pieceAlliance, piecePosition);
 	}
 
 	@Override
@@ -55,6 +55,10 @@ public class King extends Piece {
 		 return ImmutableList.copyOf(legalMoves);
 	}
 	
+	@Override
+	public String toString() {
+		return Piece.PieceType.KING.toString();
+	}
 	
 	private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset) {
 		return BoardUtils.FIRST_COLUMN[currentPosition] && ((candidateOffset == -9) || (candidateOffset == 7)||

@@ -17,7 +17,7 @@ public class Rook extends Piece {
 	private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATE = { -8, -1, 1, 8 };
 
 	public Rook(final Alliance pieceAlliance, final int piecePosition) {
-		super(pieceAlliance, piecePosition);
+		super(PieceType.ROOK, pieceAlliance, piecePosition);
 	}
 
 	@Override
@@ -29,13 +29,13 @@ public class Rook extends Piece {
 			int candidateDestinationCoordinate = this.piecePosition;
 
 			while (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
-				candidateDestinationCoordinate += candidateCoordinateOffset;
 
 				// checks if the Rook is on first o eighth column. If yes - break;
 				if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset)
 						|| (isEighthColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset))) {
 					break;
 				}
+				candidateDestinationCoordinate += candidateCoordinateOffset;
 
 				if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
@@ -58,6 +58,11 @@ public class Rook extends Piece {
 		}
 
 		return ImmutableList.copyOf(legalMoves);
+	}
+	
+	@Override
+	public String toString() {
+		return PieceType.ROOK.toString();
 	}
 
 	// if the Rook is in first column.

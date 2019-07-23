@@ -20,7 +20,7 @@ public class Bishop extends Piece {
 
 	// c-tor:
 	public Bishop(final Alliance pieceAlliance,final int piecePosition) {
-		super(pieceAlliance, piecePosition);
+		super(PieceType.BISHOP, pieceAlliance, piecePosition);
 	}
 
 	@Override
@@ -32,7 +32,6 @@ public class Bishop extends Piece {
 			int candidateDestinationCoordinate = this.piecePosition;
 
 			while (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
-				candidateDestinationCoordinate += candidateCoordinateOffset;
 
 				// checks if the bishop is on first o eighth column. If yes - break;
 				if (isFirstColumnExclusion(candidateDestinationCoordinate, candidateCoordinateOffset)
@@ -40,6 +39,7 @@ public class Bishop extends Piece {
 					break;
 				}
 
+				candidateDestinationCoordinate += candidateCoordinateOffset;
 				if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
 					final Tile candidateDestinaionTile = board.getTile(candidateDestinationCoordinate);
@@ -61,6 +61,13 @@ public class Bishop extends Piece {
 		}
 
 		return ImmutableList.copyOf(legalMoves);
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return Piece.PieceType.BISHOP.toString();
 	}
 
 	// if the Bishop is in first column.
