@@ -16,20 +16,20 @@ public class Knight extends Piece {
 	// CANDIDATE_MOVE_COORDINATES - is relative to Knight position.
 	private final static int[] CANDIDATE_MOVE_COORDINATES = { -17, -15, -10, -6, 6, 10, 15, 17 };
 
-	public Knight(final int piecePosition, final Alliance pieceAlliance) {
-		super(piecePosition, pieceAlliance);
+	public Knight(final Alliance pieceAlliance, final int piecePosition) {
+		super(pieceAlliance, piecePosition);
 	}
 
 	@Override
-	public Collection<Move> calculateLegalMoves(Board board) {
+	public Collection<Move> calculateLegalMoves(final Board board) {
 
 		List<Move> legalMoves = new ArrayList<>();
 
 		for (final int currentCandidateOffset : CANDIDATE_MOVE_COORDINATES) {
 
-			int candidateDestinaionCoordinate = this.piecePosition - currentCandidateOffset;
+			int candidateDestinationCoordinate = this.piecePosition - currentCandidateOffset;
 
-			if (BoardUtils.isValidTileCoordinate(candidateDestinaionCoordinate)) {
+			if (BoardUtils.isValidTileCoordinate(candidateDestinationCoordinate)) {
 
 				if (isFirstColumnExclusion(this.piecePosition, currentCandidateOffset)
 						|| isSecondColumnExclusion(this.piecePosition, currentCandidateOffset)
@@ -38,16 +38,16 @@ public class Knight extends Piece {
 					continue;
 				}
 
-				final Tile candidateDestinaionTile = board.getTile(candidateDestinaionCoordinate);
+				final Tile candidateDestinaionTile = board.getTile(candidateDestinationCoordinate);
 
 				if (!candidateDestinaionTile.isTileOccupied()) {
-					legalMoves.add(new Move());
+					legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
 				} else {
 					final Piece pieceAtDestination = candidateDestinaionTile.getPiece();
 					final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
 					if (this.pieceAlliance != pieceAlliance) {
-						legalMoves.add(new Move());
+						legalMoves.add(new Move.AttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
 					}
 				}
 			}
