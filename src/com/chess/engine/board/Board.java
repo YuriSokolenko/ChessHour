@@ -19,6 +19,7 @@ import com.chess.engine.player.BlackPlayer;
 import com.chess.engine.player.Player;
 import com.chess.engine.player.WhitePlayer;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 
 /**
  * 
@@ -36,6 +37,8 @@ public class Board {
 	private final WhitePlayer whitePlayer;
 	private final BlackPlayer blackPlayer;
 
+	private final Player currentPlayer;
+	
 	private Board(Builder builder) {
 		this.gameBoard = createGameBoard(builder);
 		this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
@@ -46,7 +49,7 @@ public class Board {
 
 		this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
 		this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
-
+		this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer, this.blackPlayer);
 	}
 
 	@Override
@@ -71,6 +74,10 @@ public class Board {
 		return this.blackPlayer;
 	}
 
+	public Player currentPlayer() {
+		return this.currentPlayer;
+	}
+	
 	public Collection<Piece> getBlackPieces() {
 		return this.blackPieces;
 	}
@@ -173,7 +180,8 @@ public class Board {
 
 		Map<Integer, Piece> boardConfig;
 		Alliance nextMoveMaker;
-
+		Pawn enPassantPawn;
+		
 		public Builder() {
 			this.boardConfig = new HashMap<>();
 		}
@@ -193,6 +201,16 @@ public class Board {
 			return new Board(this);
 		}
 
+		public void setEnPassantPawn(Pawn enPassantPawn) {
+			this.enPassantPawn = enPassantPawn;
+		}
+
 	}
+
+	public Iterable<Move> getAllLegalMoves() {
+
+		return Iterables.unmodifiableIterable(Iterables.concat(this.whitePlayer.getLegalMoves(), this.blackPlayer.getLegalMoves()));
+	}
+
 
 }

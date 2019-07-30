@@ -77,4 +77,9 @@ public class Queen extends Piece {
 		return BoardUtils.EIGHTH_COLUMN[currentPosition] && (candidateOffset == 1||candidateOffset == 9 || candidateOffset == -7);
 	}
 
+	@Override
+	public Queen movePiece(Move move) {
+		return new Queen(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
+	}
+
 }
